@@ -2,9 +2,9 @@
 %html(lang="en")
   %head
     %meta(charset="utf-8")
-    %title aRailsDemo
-    %meta(name="description" content="An example Ruby on Rails website.")
-    %meta(name="keywords" content="rails, ruby, ruby on rails, demo, example, tutorial, programming")
+    %title unDemoDeRails
+    %meta(name="description" content="Un ejemplo de n sitio web hecho en Rails")
+    %meta(name="keywords" content="rails, ruby, ruby on rails, demo, ejemplo, tutorial, programacion")
 
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
@@ -16,8 +16,18 @@
     = csrf_meta_tag
 
   %body
+    #header
+      = render 'header'
+
     #container
-      #header
+      %ul#menu
+        %li
+          %a{ :href => "/" } Home
+        %li
+          %a{ :href => "/tutoriales" } Creando este sitio
+        %li
+          %a{ :href => "/tutoriales" } GitHub
+        .clear
 
       #content        
         = yield

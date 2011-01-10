@@ -1,0 +1,155 @@
+%h1 #1 Nuestra nueva aplicacion Rails
+
+%p Vamos a comenzar creando nuestra aplicacion Rails 3.0 y haremos unas configuraciones iniciales.
+
+%h2 Generando nuestra aplicacion
+
+%p En el terminal, crearemos nuestra nueva aplicacion Rails. Trabajo bajo ambiente mac y uso VIm para editar los archivos.
+
+%p 
+  Si quieres especificar la version de Rails al momento de crear el proyecto escribimos: 
+  %b 'rails _3.0.0.rc_ new railsdemo'
+  , donde la version de rails que quieres usar ira entre los guiones bajos
+
+%p 
+  %i Terminal
+
+#preos
+  %p 
+    > rails new undemoderails
+    %br
+    > cd undemoderails
+    %br
+    > vim .
+
+
+%h2 Configurando el Gemfile
+
+%p Usaremos la base de datos por defecto SQLite para el desarrollo. ( Luego haremos deploy en Heroku para produccion. Heroku usa PostgreSQL )
+
+%p Yo uso HAML, SASS y jQuery en mis proyectos. Para este proyecto probare compass por primera vez.
+
+%p
+  %i Gemfile
+
+#preos
+  %p 
+    source 'http://rubygems.org'
+    %br
+    gem 'rails', '3.0.0'
+    %br
+    gem 'sqlite3-ruby', :require => 'sqlite3'
+    %br
+    gem 'haml-rails'
+    %br
+    gem 'jquery-rails'
+    %br
+    gem "compass", ">= 0.10.5"
+    %br
+    gem 'rails3-generators'
+
+
+%h2 Instalar las gemas y jQuery
+
+%p El generador jquery removera la libreria Prototype que viene por defecto al generar una app Rails e instalara jQuery, jQuery-ui, y rails.js
+
+%p 
+  %i Terminal
+
+#preos
+  %p
+    > bundle install
+    %br
+    > rails g jquery:install --ui
+
+
+%h2 Configurando nuestra app para usar jQuery
+
+%p En application.rb configuramos que archivos son incluidos por defecto. Mientras estamos alli, configuraremos nuestra time zone.
+
+%p
+  %i config/application.rb
+
+#preos
+  %p
+    config.time_zone = 'Caracas'
+    %br
+    config.action_view.javascript_expansions[:defaults] = %w(jquery jquery-ui rails)
+
+%p Para ver una lista de las horas locales puedes ejecutar
+
+%p
+  %i Terminal 
+
+#preos
+  %p rake time:zones:local
+
+%h2 Instalando Compass
+
+%p Al instalar compass este nos pregunta donde queremos colocar los archivos sass, compass recomienda colocarlos en el directorio /app, probablemente para mantenerlos escodidos. Respondi "no" a las dos preguntas porque prefiero mantener mis archivos sass bajo el directorio /public/stylesheets
+
+%p
+  %i Terminal
+
+#preos
+  %p
+    > compass init rails /undemoderails --using blueprint/semantic
+
+
+%h2 Configurando el theme (layout) de la aplicacion
+
+%p La instalacion de compass requerira que añadamos algunas lineas en nuestro layout. Mietras estamos alli cambiaremos la extension del archivo a .haml y haremos las siguientes modificaciones
+
+%p
+  %i app/views/layouts/application.html.haml
+
+#preos
+  %img{ :src => "/images/one_layout_code.png" }
+
+%h2 Guardando nuestro Trabajo
+
+%p Usaremos git para nuestro control de versiones. Heroku tambien requerira que usemos git
+
+%p
+  %i Terminal
+
+#preos
+  %p
+    > git init
+    %br
+    > git add .
+    %br
+    > git commit -m 'Initial setup'
+
+
+%h2 Ignorando archivos en git
+
+%p El archivo .gitignore le dira a git cuales archivos no seguir. Usaremos una configuracion hecha por Michael Hartl
+
+%p
+  %i undemoderails/.gitignore
+
+#preos
+  %p
+    %pre .bundle
+    db/*.sqlite3*
+    %br
+    log/*.log
+    %br
+    *.log
+    %br
+    tmp/**/*
+    %br
+    tmp/*
+    %br
+    doc/api
+    %br
+    doc/app
+    %br
+    *.swp
+    %br
+    *~
+
+%br
+%br
+%br
