@@ -1,4 +1,6 @@
 Undemoderails::Application.routes.draw do
+  resources :posts
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -6,6 +8,7 @@ Undemoderails::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   match '/tutoriales' => 'application#tutoriales'
   match '/post/1' => 'application#primerpost'
+  match '/post/2' => 'application#segundopost'
 
   # Keep in mind you can assign values other than :controller and :action
 

@@ -1,0 +1,14 @@
+%h1= "Construyendo este siito"
+
+- @posts.each do |post|
+  .postShow
+    .sequence= "#" + post.secuencia.to_s
+    .title= link_to post.titulo, post
+    .date= l post.created_at, :format => :date    
+    .admin
+      = link_to 'Editar', edit_post_path(post)
+      = link_to 'Borrar', post, :confirm => 'Estas seguro?', :method => :delete
+    .clear
+
+%br.clear
+= link_to 'Nuevo Post', new_post_path   

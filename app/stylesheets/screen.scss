@@ -66,12 +66,18 @@ ul#tutoriales {
   margin: 0 0 30px 0;
 
   li {
-    float: left;
     margin: 20px 20px 20px 0;
+    display: block;
   
     a {
       color: #8A1204;
     }
+  }
+}
+
+ul#menu {
+  li {
+    float: left;
   }
 }
 

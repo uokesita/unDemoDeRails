@@ -1,0 +1,151 @@
+%h1 #2 Scaffolding - Gestionando los post
+
+%p Al finalizar este articulo tendremos la habilidad de manejar o gestionar el contenido mediante posts
+
+
+%h2 Simple Form 
+
+%p Ryan Bates realizo un episodio sobre el uso de la gema simple_form, asi que la usaremos aca.
+
+%p 
+  %i Gemfile 
+
+#preos
+  %p
+    gem 'simple_form'
+
+%p 
+  %i Terminal
+
+#preos
+  %p
+    > bundle 
+    %br
+    > rails g simple_form:install
+
+
+%h2 Scaffolding
+
+%p 
+  Ya que el controller de los post sera bastante usual (standard) usaremos el generador de Rails para realizar el scaffold. Nuestros posts tendran titulo, numero de secuencia (numero del post) y descripcion. Luego de creado el scaffold haremos la migracion de la base de datos.
+
+%p
+  %i Terminal
+
+#preos
+  %p
+    > rails g scaffold post titulo:string secuencia:integer descripcion:text
+    %br
+    > rake db:migrate
+
+%p Si necesitas deshacer la ultima migracion, puedes hacer 'rake db:rollback'.
+%p Si necesitas deshacer un scaffold, puedes hacer 'rails destroy scaffold post' 
+
+
+%h2 Modelado
+
+%p 
+  Para realizar el ordenamiento al hacer las busquedas configuraremos el orden de los post para que se muestren por defecto segun el numero de secuencia. Tambien agregaremos algunas validaciones.
+
+%p 
+  %i app/models/post.rb
+
+#preos
+  %p
+    class Post < ActiveRecord::Base
+    %br
+    default_scope order("secuencia DESC")
+    %br  
+    validates :titulo,      :presence => true
+    %br
+    validates :secuencia,   :presence => true, :numericality => { :greater_than => 0 }
+    %br 
+    validates :descripcion, :presence => true
+    %br
+    end
+
+%h2 Modifying Our Form View
+
+%p 
+  En nuestro formulario de post, moveremos la visa de errores (Railscast #211), y configurar el numero de filas del nuestro textarea
+
+%p
+  %i app/views/posts/_form.html.haml 
+
+#preos
+  %script{ :src=>"https://gist.github.com/779226.js"}
+
+  
+%p 
+  %i views/shared/_error_messages.html.haml
+
+#preos
+  %script{ :src=>"https://gist.github.com/779224.js"}
+
+%h2 Algo de CSS 
+
+%p 
+  En la hoja de estilo del scaffold cambiaremos '#error_explanation' a '#errorExplanation' para que corresponda con los cambios que hicimos en la vista
+
+%p Tambien usaremos el css de simple_form hecho por Ryan Bates
+
+%p
+  %i public/stylesheets/scaffold.css
+
+#preos
+  %script{ :src=>"https://gist.github.com/779223.js"}
+
+%h2 Cambiando la pagina de inicio 
+
+%p 
+  Nos desharemos del template de tablas, y haremos el titulo del post un link a la vista completa del post. Tambien mostraremos la fecha de creacion del post
+
+%p
+  %i
+
+#preos    
+  %script{ :src=>"https://gist.github.com/779218.js?file=%232%20a"}
+
+
+%h2 Dando formato a la fecha
+
+%p 
+  Aqui usaremos la api de internacionalizacion de Rails (I18nn). El metodo 'l' es un alias para el metodo 'I18n.localize'. Cuando usemos este metodo, Rails buscara en nuestro archivo 'locale' por el formato requerido.
+
+%p
+  %i config/locales/es.yml
+
+#preos
+  %script{ :src=>"https://gist.github.com/779221.js"}
+
+%p 
+  Rails esta configurado para usar el locale en ingles asi que configuraremos nuestra aplicacion para que use el locale en espaniol
+
+%p
+  %i config/application.rb
+
+#preos
+  %p config.i18n.default_locale = :es
+
+
+%h2 Anadiendo la URL base 
+
+%p 
+  Ya que tenemos algo de contenido, cambiaremos nuestra pagina principal a nuestra accion 'index'. Definiremos la pagina en nuetro archivo 'routes' y luego borraremos el archivo 'public/index.html'
+
+%p 
+  %i config/routes.rb
+
+#preos
+  %p
+    Mysite::Application.routes.draw do
+    %br
+    resources :posts
+    %br
+    root :to => "posts#home"  
+    %br
+    root :to => "posts#index"  
+    %br
+    end
+
+
